@@ -16,9 +16,12 @@ ifeq ($(R_OSTYPE)$(WIN),windows)
 endif
 $(foreach v, $(XGB_RFLAGS), $(warning $(v)))
 
-PKG_CPPFLAGS=  -I$(PKGROOT)/include -I$(PKGROOT)/dmlc-core/include -I$(PKGROOT)/rabit/include -I$(PKGROOT) $(XGB_RFLAGS)
+MPI_CPPFLAGS = `${R_HOME}/bin/Rscript -e "pbdMPI::get.conf('PKG_CPPFLAGS', '', 'pbdMPI')"`
+MPI_LDFLAGS = `${R_HOME}/bin/Rscript -e "pbdMPI::get.conf('PKG_LIBS', '', 'pbdMPI')"`
+
+PKG_CPPFLAGS=  -I$(PKGROOT)/include -I$(PKGROOT)/dmlc-core/include -I$(PKGROOT)/rabit/include -I$(PKGROOT) $(XGB_RFLAGS) $(MPI_CPPFLAGS)
 PKG_CXXFLAGS= @OPENMP_CXXFLAGS@ -pthread
-PKG_LIBS = @OPENMP_CXXFLAGS@ -pthread
-OBJECTS= ./xgboost_R.o ./xgboost_custom.o ./xgboost_assert.o ./init.o\
+PKG_LIBS = @OPENMP_CXXFLAGS@ -pthread $(MPI_LDFLAGS) -lmpi_cxx
+OBJECTS= ./xgboost_R.o ./xgboost_custom.o ./xgboost_assert.o ./xgboost_rabit.o ./init.o\
          $(PKGROOT)/amalgamation/xgboost-all0.o $(PKGROOT)/amalgamation/dmlc-minimum0.o\
-         $(PKGROOT)/rabit/src/engine_empty.o $(PKGROOT)/rabit/src/c_api.o
+         $(PKGROOT)/rabit/src/engine_mpi.o $(PKGROOT)/rabit/src/c_api.o

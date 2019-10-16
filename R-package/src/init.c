@@ -39,6 +39,10 @@ extern SEXP XGDMatrixNumRow_R(SEXP);
 extern SEXP XGDMatrixSaveBinary_R(SEXP, SEXP, SEXP);
 extern SEXP XGDMatrixSetInfo_R(SEXP, SEXP, SEXP);
 extern SEXP XGDMatrixSliceDMatrix_R(SEXP, SEXP);
+extern SEXP XGBoosterRabitInit_R();
+extern SEXP XGBoosterRabitFinalize_R();
+extern SEXP XGBoosterRabitGetWorldSize_R();
+extern SEXP XGBoosterRabitGetRank_R();
 
 static const R_CallMethodDef CallEntries[] = {
   {"XGBoosterBoostOneIter_R",     (DL_FUNC) &XGBoosterBoostOneIter_R,     4},
@@ -65,6 +69,10 @@ static const R_CallMethodDef CallEntries[] = {
   {"XGDMatrixSaveBinary_R",       (DL_FUNC) &XGDMatrixSaveBinary_R,       3},
   {"XGDMatrixSetInfo_R",          (DL_FUNC) &XGDMatrixSetInfo_R,          3},
   {"XGDMatrixSliceDMatrix_R",     (DL_FUNC) &XGDMatrixSliceDMatrix_R,     2},
+  {"XGBoosterRabitInit_R",        (DL_FUNC) &XGBoosterRabitInit_R,        0},
+  {"XGBoosterRabitFinalize_R",    (DL_FUNC) &XGBoosterRabitFinalize_R,    0},
+  {"XGBoosterRabitGetWorldSize_R",(DL_FUNC) &XGBoosterRabitGetWorldSize_R,0},
+  {"XGBoosterRabitGetRank_R",     (DL_FUNC) &XGBoosterRabitGetRank_R,     0},
   {NULL, NULL, 0}
 };
 
